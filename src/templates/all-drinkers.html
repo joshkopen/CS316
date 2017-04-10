@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% block heading %}All Restaurants{% endblock %}
+{% block content %}
+<ul>
+  {% for restaurant in restaurants %}
+  <li><a href="{{url_for('restaurant', name=restaurant.name)}}">{{restaurant.name}}</a></li>
+  {% endfor %}
+</ul>
+<hr/>
+<p>{{restaurants|length}} restaurant{{restaurants|length|pluralize}}
+  found in the database.</p>
+{% endblock %}

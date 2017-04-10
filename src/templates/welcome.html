@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% block heading %} Welcome {{student.name}}!{% endblock %}
+{% block content %}
+<p>Open restaurants:
+  <ul>
+    {% for rest in openRestaurants %}
+     <li><a href="{{url_for('restaurant', name=rest.restaurant_name)}}">{{rest.restaurant_name}}</a></li>   
+    {% endfor %}
+  </ul>
+</p>
+<hr/>
+{% endblock %}

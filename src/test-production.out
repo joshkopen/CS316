@@ -1,0 +1,163 @@
+--Queries
+--Find restaurants in WU
+SELECT Name
+FROM Restaurant
+WHERE (Location = 'West Union');
+         name          
+-----------------------
+ Au Bon Pain
+ The Cafe
+ Chefs Kitchen
+ Ginger and Soy
+ Gyotaku
+ Il Forno
+ JB's Roasts and Chops
+ Sprout
+ Tandoor
+ The Commons
+ Devils Kraft House
+ The Farmstead
+ The Skillet
+(13 rows)
+
+
+
+
+
+--Find restaurants which serve pizza
+SELECT Restaurant_name
+FROM Serves
+WHERE Food_name = 'Black Bean Soup';
+  restaurant_name   
+--------------------
+ Devils Kraft House
+(1 row)
+
+
+--Find restaurants which are open on Mondays
+SELECT Restaurant_name
+FROM IsOpen
+WHERE Day_of_the_week = 1;
+    restaurant_name    
+-----------------------
+ Au Bon Pain
+ Bella Union
+ Blue Express
+ The Cafe
+ Cafe at Smith
+ Cafe de Novo
+ Cafe Edens
+ Chefs Kitchen
+ Dames Express
+ Devils Kraft House
+ Divinity Cafe
+ Dolce Vita
+ Freeman Center
+ Ginger and Soy
+ Gyotaku
+ Il Forno
+ JB's Roasts and Chops
+ Joe Van Gogh
+ Loop Pizza Grill
+ McDonalds
+ Panda Express
+ Quenchers
+ Red Mango
+ Saladelia at Perkins
+ Saladelia at Sanford
+ Sprout
+ Tandoor
+ Terrace Cafe
+ The Commons
+ The Farmstead
+ The Skillet
+ Trinity Cafe
+ Twinnies
+(33 rows)
+
+
+--Find the phone number of Papa Johns
+SELECT Phonenumber
+FROM Merchant
+WHERE Restaurant_name = 'Loop Pizza Grill';
+ phonenumber 
+-------------
+(0 rows)
+
+
+--Find restaurants which close past 10 PM at least one day of the week
+SELECT DISTINCT Restaurant_name
+FROM IsOpen
+WHERE Close_Time >= 22;
+   restaurant_name    
+----------------------
+ Trinity Cafe
+ Au Bon Pain
+ Devils Kraft House
+ Loop Pizza Grill
+ The Cafe
+ Bella Union
+ Panda Express
+ Dames Express
+ Saladelia at Perkins
+(9 rows)
+
+
+--Find all food with calories above 600
+SELECT Name
+FROM Food
+WHERE Calories > 600;
+            name            
+----------------------------
+ Wings
+ Nachos
+ Turkey Club Kraft
+ Chicken Sandwhich Kraft
+ Cheese Steak Sandwich
+ Pimento Cheese Sanwich
+ Reuben Sandwich
+ Burrito
+ Large Pasta
+ Pizza
+ Ciabattas
+ Non-Vegetarian
+ Deluxe Sashimi Bowl
+ Deluxe Sushi Bento
+ Aged Ribeye
+ Porterhouse
+ Lobster Mac and Cheese
+ Turkey Club ABP
+ Chipotle Black Bean Burger
+ The Veggie
+ Trurkey Cranberry Brie
+ Grilled Chicken Avocado
+ Turkey and Swiss
+ Black Forest Ham
+ Chicken Caesar Wrap
+ Mediterranean Wrap
+ Napa Chicken Wrap
+ Coal Braised Beef Brisket
+ Prime Rib Au Jus
+ Bone in Pork Chop
+ Prime Rib Steak Sandwich
+ Loop Burger
+ BBQ Bacon Cheddar
+(33 rows)
+
+
+--Find allergens which can be cured with an epipen
+SELECT Type
+FROM Allergens
+WHERE Medication = 'epipen';
+   type    
+-----------
+ dairy
+ wheat
+ soybeans
+ peanuts
+ tree nuts
+ shellfish
+ fish
+ eggs
+ dairy 
+(9 rows)
