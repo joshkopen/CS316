@@ -62,6 +62,28 @@ def welcome(netid):
             openRestaurants.append(rest)
     return render_template('welcome.html',student=student,openRestaurants=openRestaurants)
 
+@app.route('/edit-student/<name>', methods=['GET', 'POST'])
+def edit_student(name):
+    student = db.session.query(models.Student)\
+        .filter(models.Drinker.name == name).one()
+    restaurant = db.session.query(models.Restaurant).all()
+    food = db.session.query(models.Food).all()
+	allergen = db.session.query(models.Allergen).all()
+    form = forms.StudentEditFormFactory.form(student, restaurant, food, allergen)
+    if form.validate_on_submit():
+        try:
+            form.errors.pop('database', None)
+            models.Student.edit(name, form.name.data, 
+                                form.get_restaurant_freq(), form.get_food_liked(),
+							   form.get_allergens())
+            return redirect(url_for('student', name=form.name.data))
+        except BaseException as e:
+            form.errors['database'] = str(e)
+            return render_template('edit-student.html', student=student, form=form)
+    else:
+        return render_template('edit-student.html', student=student, form=form)
+
+
 @app.template_filter('pluralize')
 def pluralize(number, singular='', plural='s'):
     return singular if number in (0, 1) else plural

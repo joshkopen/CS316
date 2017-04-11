@@ -5,7 +5,7 @@ CREATE TABLE Restaurant
 	Is_food_truck BOOLEAN NOT NULL
 );
 
---Monday counts as day_of_the_week 1
+--Monday counts as day_of_the_week 1--
 CREATE TABLE IsOpen
 (
 	Restaurant_name VARCHAR(256) NOT NULL REFERENCES Restaurant(Name),

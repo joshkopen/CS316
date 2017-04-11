@@ -2,41 +2,62 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, BooleanField, IntegerField
 from wtforms.validators import DataRequired
 
-class DrinkerEditFormFactory:
+class StudentEditFormFactory:
     @staticmethod
-    def form(drinker, beers, bars):
+    def form(student, restaurant, food, allergen):
         class F(FlaskForm):
             name = StringField(default=drinker.name)
-            address = StringField(default=drinker.address)
             @staticmethod
-            def beer_field_name(index):
-                return 'beer_{}'.format(index)
-            def beer_fields(self):
-                for i, beer in enumerate(beers):
-                    yield beer.name, getattr(self, F.beer_field_name(i))
-            def get_beers_liked(self):
-                for beer, field in self.beer_fields():
+            def restaurant_field_name(index):
+                return 'restaurant_{}'.format(index)
+            def restaurant_fields(self):
+                for i, rest in enumerate(restaurant):
+                    yield rest.name, getattr(self, F.restaurant_field_name(i))
+            def get_restaurant_freq(self):
+                for rest, field in self.restaurant_fields():
                     if field.data:
-                        yield beer
+                        yield rest
+						
             @staticmethod
-            def bar_field_name(index):
-                return 'bar_{}'.format(index)
-            def bar_fields(self):
-                for i, bar in enumerate(bars):
-                    yield bar.name, getattr(self, F.bar_field_name(i))
-            def get_bars_frequented(self):
-                for bar, field in self.bar_fields():
+            def food_field_name(index):
+                return 'food_{}'.format(index)
+            def food_fields(self):
+                for i, foods in enumerate(food):
+                    yield foods.name, getattr(self, F.food_field_name(i))
+            def get_food_liked(self):
+                for foods, field in self.food_fields():
                     if field.data != 0:
-                        yield bar, field.data
-        beers_liked = [like.beer for like in drinker.likes]
-        for i, beer in enumerate(beers):
-            field_name = F.beer_field_name(i)
-            default = 'checked' if beer.name in beers_liked else None
+                        yield foods
+						
+						
+			@staticmethod
+            def allergen_field_name(index):
+                return 'allergen_{}'.format(index)
+            def allergen_fields(self):
+                for i, allergens in enumerate(allergen):
+                    yield allergens.name, getattr(self, F.allergen_field_name(i))
+            def get_allergen_liked(self):
+                for allergens, field in self.allergen_fields():
+                    if field.data != 0:
+                        yield allergens, field.data
+								
+        restaurant_freq = [restaufreq.name for restafreq in student.eatsat]
+        for i, rest in enumerate(restaurant):
+            field_name = F.restaurant_field_name(i)
+            default = 'checked' if rest.name in restaurant_freq else None
             setattr(F, field_name, BooleanField(default=default))
-        bars_frequented = {frequent.bar: frequent.times_a_week\
-                           for frequent in drinker.frequents}
-        for i, bar in enumerate(bars):
-            field_name = F.bar_field_name(i)
-            default = bars_frequented[bar.name] if bar.name in bars_frequented else 0
-            setattr(F, field_name, IntegerField(default=default))
+			
+		food_liked = [foodlike.name for foodlike in student.eats]
+        for i, foo in enumerate(food):
+            field_name = F.food_field_name(i)
+            default = 'checked' if foo.name in food_liked else None
+            setattr(F, field_name, BooleanField(default=default))
+			
+		allergens = [allerto.allergenType for allerto in student.is_allergic_to]
+        for i, aller in enumerate(allergen):
+            field_name = F.allergen_field_name(i)
+            default = 'checked' if aller.name in allergens else None
+            setattr(F, field_name, BooleanField(default=default))
+		
+	
         return F()
