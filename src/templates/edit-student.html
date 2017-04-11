@@ -1,12 +1,18 @@
 {% extends 'layout.html' %}
 {% block heading %}Edit Drinker Information: {{drinker.name}}{% endblock %}
 {% block content %}
-<form action="{{url_for('edit_drinker', name=student.name)}}" method="POST">
+<form action="{{url_for('edit_student', name=student.name, netid=student.netid)}}" method="POST">
   {{form.csrf_token}}
   <p>
     Name: {{form.name}}
     {% if form.name.errors %}
     <ul>{% for error in form.name.errors %}<li>{{error}}</li>{% endfor %}</ul>
+    {% endif %}
+  </p>
+  <p>
+    NetId: {{form.netid}}
+    {% if form.netid.errors %}
+    <ul>{% for error in form.netid.errors %}<li>{{error}}</li>{% endfor %}</ul>
     {% endif %}
   </p>
   <p>Restaurant(s) liked:
@@ -35,7 +41,7 @@
   </p>
  <p>Alergens(s) have:
     <ul>
-      {% for alergens, field in form.alergens_fields() %}
+      {% for alergens, field in form.allergens_fields() %}
       <li>
         {{alergens}}: {{field}}
         {% if field.errors %}

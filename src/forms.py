@@ -6,7 +6,8 @@ class StudentEditFormFactory:
     @staticmethod
     def form(student, restaurant, food, allergen):
         class F(FlaskForm):
-            name = StringField(default=drinker.name)
+            name = StringField(default=student.name)
+			netid = StringField(default=student.netid)
             @staticmethod
             def restaurant_field_name(index):
                 return 'restaurant_{}'.format(index)
@@ -53,10 +54,10 @@ class StudentEditFormFactory:
             default = 'checked' if foo.name in food_liked else None
             setattr(F, field_name, BooleanField(default=default))
 			
-		allergens = [allerto.allergenType for allerto in student.is_allergic_to]
+		allergic_to = [allerto.allergenType for allerto in student.is_allergic_to]
         for i, aller in enumerate(allergen):
             field_name = F.allergen_field_name(i)
-            default = 'checked' if aller.name in allergens else None
+            default = 'checked' if aller.name in allergic_to else None
             setattr(F, field_name, BooleanField(default=default))
 		
 	
